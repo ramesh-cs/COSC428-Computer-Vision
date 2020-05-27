@@ -1,0 +1,12 @@
+use international_travel_migration_process
+go
+select j.overseas_state_code, count(1) from movement m
+join journey j on j.movementId = m.movementId
+where cast(actual_date as date)  > '2018-10-31'
+    and j.overseas_state_code is not null
+    and j.clnpr_code = 'AU'
+    and j.overseas_state_code like '%AU%'
+    and j.ImageId is not null
+
+group by j.overseas_state_code
+order by j.overseas_state_code
